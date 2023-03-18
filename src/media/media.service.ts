@@ -3,6 +3,7 @@ import {
   BadRequestException,
   InternalServerErrorException,
   Injectable,
+  Logger,
 } from "@nestjs/common";
 import { Prisma, Status } from "@prisma/client";
 import { isObjectEmpty } from "../utils/is-object-empty.utilities";
@@ -18,6 +19,7 @@ import { generateUUID } from "./../utils/generate-uuid.utils";
 
 @Injectable()
 export class MediaService {
+  private readonly logger = new Logger(MediaService.name);
   constructor(private prisma: PrismaService) {}
 
   // Get media by unique input, returns a single media or null
@@ -30,6 +32,11 @@ export class MediaService {
 
     if (!media) {
       // If no media found, throw a BadRequestException with error message
+      this.logger.error({
+        status: OperationStatus.ERROR,
+        message: `No media found with the specified Id, ${userWhereUniqueInput.id}`,
+        data: {},
+      });
       throw new BadRequestException({
         status: OperationStatus.ERROR,
         message: `No media found with the specified Id, ${userWhereUniqueInput.id}`,
@@ -66,6 +73,11 @@ export class MediaService {
         data: medias,
       };
     } catch (error) {
+      this.logger.error({
+        status: OperationStatus.ERROR,
+        message: `${error?.meta?.cause}`,
+        data: {},
+      });
       // If any error occurred while retrieving data, throw a BadRequestException with error message
       throw new BadRequestException({
         status: OperationStatus.ERROR,
@@ -103,6 +115,11 @@ export class MediaService {
       };
     } catch (error) {
       // If any error occurred while retrieving data, throw an InternalServerErrorException with error message
+      this.logger.error({
+        status: OperationStatus.ERROR,
+        message: `${error?.meta?.cause}`,
+        data: {},
+      });
       throw new InternalServerErrorException({
         status: OperationStatus.ERROR,
         message: `${error?.meta?.cause}`,
@@ -117,7 +134,13 @@ export class MediaService {
   async createMedia(data: Prisma.MediaCreateInput): Promise<MediaResponseType> {
     // This line checks if the `data` object is empty or not
     // If it's empty, the function throws a `BadRequestException` with a message `No valid field`
+
     if (!isObjectEmpty({ ...data })) {
+      this.logger.error({
+        status: OperationStatus.ERROR,
+        message: `No valid field`,
+        data: {},
+      });
       throw new BadRequestException({
         status: OperationStatus.ERROR,
         message: `No valid field`,
@@ -149,7 +172,11 @@ export class MediaService {
     } catch (error) {
       // This block of code runs if there is an error creating the `newMedia` object
       // It logs the error to the console and throws a `BadRequestException` with a message that includes the error `meta.cause`
-      console.log(error);
+      this.logger.error({
+        status: OperationStatus.ERROR,
+        message: `${error?.meta?.cause}`,
+        data: {},
+      });
       throw new BadRequestException({
         status: OperationStatus.ERROR,
         message: `${error?.meta?.cause}`,
@@ -173,6 +200,11 @@ export class MediaService {
     // This line checks if the `updateMediaDto` object is empty or not
     // If it's empty, the function throws a `BadRequestException` with a message `Nothing to update`
     if (!isObjectEmpty(updateMediaDto)) {
+      this.logger.error({
+        status: OperationStatus.ERROR,
+        message: `Nothing to update`,
+        data: {},
+      });
       throw new BadRequestException({
         status: OperationStatus.ERROR,
         message: `Nothing to update`,
@@ -202,6 +234,11 @@ export class MediaService {
     } catch (error) {
       // This block of code runs if there is an error updating the `updatedMedia` object
       // It throws a `BadRequestException` with a message that includes the error `meta.cause`
+      this.logger.error({
+        status: OperationStatus.ERROR,
+        message: `${error?.meta?.cause}`,
+        data: {},
+      });
       throw new BadRequestException({
         status: OperationStatus.ERROR,
         message: `${error?.meta?.cause}`,
@@ -242,6 +279,11 @@ export class MediaService {
     } catch (error) {
       // This block of code runs if there is an error updating the media object
       // It throws a `BadRequestException` with a message that includes the error `meta.cause`
+      this.logger.error({
+        status: OperationStatus.ERROR,
+        message: `${error?.meta?.cause}`,
+        data: {},
+      });
       throw new BadRequestException({
         status: OperationStatus.ERROR,
         message: `${error?.meta?.cause}`,
