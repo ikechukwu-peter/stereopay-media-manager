@@ -2,6 +2,7 @@ import { ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
+import { HttpExceptionFilter } from "./filters/http-exception.filter";
 import { PrismaService } from "./prisma/prisma.service";
 
 async function bootstrap() {
@@ -21,6 +22,10 @@ async function bootstrap() {
 
   // instantiate validation pipe globally
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
+
+  // instantiate validation pipe globally
+  // only added to transform the response to the specified format rather than default nextjs format
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   const PORT = parseInt(configService.get("PORT")) ?? 4000;
 
