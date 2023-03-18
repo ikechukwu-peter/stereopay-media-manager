@@ -1,4 +1,4 @@
-## Nip
+## StereoPay Media Manager
 
 A media manager
 
