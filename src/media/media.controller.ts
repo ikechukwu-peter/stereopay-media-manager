@@ -15,6 +15,7 @@ import { searchPaginationDTO } from "./dto/search-pagination.dto";
 import { createMediaDTO } from "./dto/create-media.dto";
 import { searchDTO } from "./dto/search.dto";
 import { MediaResponseType } from "./types/media-response.types";
+import { ParseUUIDPipe } from "@nestjs/common/pipes";
 
 // Define a controller class for media API
 @Controller("media")
@@ -40,7 +41,9 @@ export class MediaController {
 
   // Endpoint method for getting media by id
   @Get(":id")
-  async getMediaById(@Param("id") id: string): Promise<MediaResponseType> {
+  async getMediaById(
+    @Param("id", new ParseUUIDPipe()) id: string,
+  ): Promise<MediaResponseType> {
     try {
       return this.mediaService.media({ id });
     } catch (error) {
@@ -61,7 +64,7 @@ export class MediaController {
   // Endpoint method for updating an existing media
   @Patch(":id")
   async updateMedia(
-    @Param("id") id: string,
+    @Param("id", new ParseUUIDPipe()) id: string,
     @Body() updateMediaDto: Partial<createMediaDTO>,
   ): Promise<MediaResponseType> {
     return this.mediaService.updateMedia({
@@ -73,7 +76,9 @@ export class MediaController {
   // Endpoint method for deleting a media by id
   @Delete(":id")
   // @HttpCode(204)
-  async deleteMedia(@Param("id") id: string): Promise<MediaResponseType> {
+  async deleteMedia(
+    @Param("id", new ParseUUIDPipe()) id: string,
+  ): Promise<MediaResponseType> {
     return this.mediaService.deleteMedia({
       where: { id },
     });
