@@ -8,6 +8,10 @@ generator client {
 datasource db {
   provider          = "mysql"
   url               = env("DATABASE_URL")
+  // Due to prisma creating shadow database, if you are using cloud hsoted db
+  // that has no privilege to create a database
+  // please use another cloud hosted database as shadow database
+  // if you have privileges just comment it out.
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 

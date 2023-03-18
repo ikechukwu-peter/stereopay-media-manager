@@ -24,6 +24,8 @@ async function bootstrap() {
 
   const PORT = parseInt(configService.get("PORT")) ?? 4000;
 
+  console.log(PORT);
+
   await app.listen(PORT);
 }
 bootstrap();
