@@ -55,7 +55,9 @@ git clone https://github.com/ikechukwu-peter/stereopay-media-manager.git
 
 After cloning the repository, navigate to the project directory and run the following command to install the project dependencies:
 
-`yarn install`
+```
+yarn install
+```
 
 ## Configuration and MySQL Database Setup with Prisma
 
@@ -89,28 +91,39 @@ Now inside here, you will find two folders `migrations` and `schema.prisma` dele
 
 To start the application, run the following command:
 
-`yarn run start`
+```
+yarn run start
+```
 
 This will start the application in production mode.
 
 To run the application in development mode, use the following command:
 
-`yarn run start:dev`
+```
+yarn run start:dev
+```
 
 This will start the application in watch mode, so any changes you make to the code will be automatically detected and the application will be recompiled.
 
 ## Testing
 
 To run the unit tests, use the following command:
-`yarn run test`
+
+```
+yarn run test
+```
 
 To run the end-to-end tests, use the following command:
 
-`yarn run test:e2e`
+```
+yarn run test:e2e
+```
 
 To generate a test coverage report, use the following command:
 
-`yarn run test:cov`
+```
+yarn run test:cov
+```
 
 ## Usage
 

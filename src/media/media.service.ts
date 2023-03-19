@@ -43,7 +43,6 @@ export class MediaService {
         data: {},
       });
     }
-
     // Return a success response with the media data
     return {
       status: OperationStatus.SUCCESS,
